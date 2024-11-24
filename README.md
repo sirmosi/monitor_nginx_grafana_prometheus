@@ -154,6 +154,6 @@ We welcome suggestions, improvements, and contributions to make this project eve
 
 If you have any questions, suggestions, or want to collaborate, feel free to reach out:
 
- ##   📧 Email: mo.sharbaf@gmail.com
- ##   📱 Phone: +989153033209
- ##   🔗 LinkedIn: Mostafa Sharbaf Golkhatmi
+ ###   📧 Email: mo.sharbaf@gmail.com
+ ###   📱 Phone: +989153033209
+ ###   🔗 LinkedIn: Mostafa Sharbaf Golkhatmi
