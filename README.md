@@ -42,7 +42,7 @@ This project sets up a monitoring system using **Prometheus**, **Grafana**, and 
 │   └── NodeExporter.sh          # Generic metric collector
 └── textfile-collector/          # Directory for Prometheus-compatible metrics
 
-🚀 Getting Started
+## 🚀 **Getting Started**
 Prerequisites
 
     Docker and Docker Compose installed.
@@ -52,20 +52,21 @@ Prerequisites
 Deployment
 
     Clone the repository:
-
+```
 git clone <repository-url>
 cd <repository-directory>
-
+```
 Start the monitoring stack:
 
+```
 docker-compose up -d
-
+```
 Verify services:
 
     Grafana: http://grafana.example.com
     Prometheus: http://prometheus.example.com
 
-📊 Grafana Dashboards
+## 📊 **Grafana Dashboards**
 Adding Prometheus Data Source
 
     Open Grafana: http://grafana.example.com
@@ -77,9 +78,9 @@ Import Dashboards
     Go to Dashboards → Import.
     Upload the JSON files from grafana/provisioning/dashboards/.
 
-🔧 NGINX Configuration
+## 🔧 **NGINX Configuration**
 Grafana Configuration (nginx/grafana.conf)
-
+```
 server {
     listen 80;
     server_name grafana.example.com;
@@ -91,9 +92,9 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
-
+```
 Prometheus Configuration (nginx/prometheus.conf)
-
+```
 server {
     listen 80;
     server_name prometheus.example.com;
@@ -105,8 +106,9 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
+```
 
-📂 Custom Metrics Collection
+##📂 **Custom Metrics Collection**
 SSH Script (Scripts/Collector.sh)
 
 This script collects metrics from remote servers via SSH and saves them in Prometheus-compatible .prom files.
@@ -114,12 +116,12 @@ Usage
 
     Edit the SERVERS variable in the script to include your servers.
     Schedule the script to run periodically via cron:
-
+```
     crontab -e
     * * * * * /path/to/Scripts/Collector.sh
-
+```
 Example Script
-
+```
 #!/bin/bash
 SERVERS=("server2" "server4")
 USER="ssh-user"
@@ -138,8 +140,8 @@ EOF
 for SERVER in "${SERVERS[@]}"; do
     collect_metrics "$SERVER"
 done
-
-💡 How You Can Help
+```
+## 💡 **How You Can Help**
 
 We welcome suggestions, improvements, and contributions to make this project even better! Here are some ideas:
 
@@ -147,10 +149,10 @@ We welcome suggestions, improvements, and contributions to make this project eve
     Optimize NGINX configurations for better performance and security.
     Create additional Grafana dashboards for specific use cases.
 
-📞 Contact Information
+## 📞 Contact Information
 
 If you have any questions, suggestions, or want to collaborate, feel free to reach out:
 
-    📧 Email: mo.sharbaf@gmail.com
-    📱 Phone: +989153033209
-    🔗 LinkedIn: Mostafa Sharbaf Golkhatmi
+ ##   📧 Email: mo.sharbaf@gmail.com
+ ##   📱 Phone: +989153033209
+ ##   🔗 LinkedIn: Mostafa Sharbaf Golkhatmi
