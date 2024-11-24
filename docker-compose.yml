@@ -1,0 +1,89 @@
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+
+networks:
+  front-tier:  
+    name: front
+    driver: bridge
+    ipam:
+     config:
+      - subnet: 192.168.1.0/24
+        ip_range: 192.168.1.0/29
+        gateway: 192.168.1.6
+  back-tier:  
+    name: back
+    driver: bridge
+    ipam:
+     config:
+      - subnet: 192.168.2.0/24
+        ip_range: 192.168.2.0/29
+        gateway: 192.168.2.6
+        
+services:
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - "9090:9090"
+    networks:
+      back-tier:
+        ipv4_address: 192.168.2.1
+      front-tier:
+        ipv4_address: 192.168.1.1
+    restart: always
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+    ports:
+      - "3000:3000"
+    networks:
+      back-tier:
+        ipv4_address: 192.168.2.2
+      front-tier:
+        ipv4_address: 192.168.1.2
+    restart: always
+
+  node-exporter:
+    image: bitnami/node-exporter
+    container_name: node-exporter
+    ports:
+      - 9100 
+    networks:
+      back-tier:
+        ipv4_address: 192.168.2.3
+    volumes:
+      - /:/host:ro,rslave
+      - ./textfile-collector:/var/lib/node_exporter
+    command:
+      - --path.rootfs=/host
+      - --collector.textfile.directory=/var/lib/node_exporter
+      - --collector.filesystem.mount-points-exclude="^(dev|proc|sys|var/lib/docker/.+)($|/)"
+    restart: always
+
+  cadvisor:
+    image: chainguard/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - 8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      back-tier:
+        ipv4_address: 192.168.2.4
+    restart: always
