@@ -41,6 +41,7 @@ This project sets up a monitoring system using **Prometheus**, **Grafana**, and 
 │   ├── Collector.sh             # Generic metric collector
 │   └── NodeExporter.sh          # Generic metric collector
 └── textfile-collector/          # Directory for Prometheus-compatible metrics
+```
 
 ## 🚀 **Getting Started**
 Prerequisites
@@ -108,7 +109,7 @@ server {
 }
 ```
 
-##📂 **Custom Metrics Collection**
+## 📂 **Custom Metrics Collection**
 SSH Script (Scripts/Collector.sh)
 
 This script collects metrics from remote servers via SSH and saves them in Prometheus-compatible .prom files.
