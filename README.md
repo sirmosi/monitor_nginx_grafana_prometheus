@@ -55,7 +55,7 @@ Deployment
     Clone the repository:
 ```
 git clone https://github.com/sirmosi/monitor_nginx_grafana_prometheus.git
-cd monitor_nginx_grafana_prometheus.git
+cd monitor_nginx_grafana_prometheus
 ```
 Start the monitoring stack:
 
