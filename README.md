@@ -5,28 +5,40 @@
 ![Grafana](https://img.shields.io/badge/Grafana-Dashboard-blue?style=flat&logo=grafana)
 ![Linux](https://img.shields.io/badge/Linux-Shell_Script-green?style=flat&logo=linux)
 
-This project sets up a robust monitoring system using **Prometheus** and **Grafana** for visualizing and analyzing server and application metrics. Additionally, it includes a custom **SSH-based data collection script** for remote servers. The entire setup is Dockerized for simplicity and portability.
+This project sets up a monitoring system using **Prometheus**, **Grafana**, and **Node Exporter** for visualizing server and application metrics. Additionally, custom SSH scripts are included to collect metrics from remote servers and feed them into Prometheus.
 
 ---
 
 ## 📜 **Features**
-1. **Docker Compose**: Centralized deployment of Grafana, Prometheus, Node Exporter, and cAdvisor using a `docker-compose.yml` file.
-2. **Custom Metrics Collection**: A script that collects server metrics via SSH and integrates them into Prometheus using the Node Exporter's textfile collector.
-3. **NGINX Reverse Proxy**: Two configurations for secure access:
-   - Grafana Dashboard
-   - Prometheus Metrics Endpoint
-4. **Customizable and Extensible**: Modular design for adding new metrics or extending configurations.
+1. **Docker Compose**: Deploy Prometheus, Grafana, and Node Exporter with a single command.
+2. **Custom Metrics Collection**: Scripts to collect metrics from remote servers using SSH.
+3. **NGINX Reverse Proxy**: Configurations for secure access to Grafana and Prometheus.
+4. **Textfile Collector**: Prometheus-compatible `.prom` files for custom metrics.
 
 ---
 
 ## 📂 **Directory Structure**
 ```plaintext
-.
-├── docker-compose.yml            # Docker Compose configuration file
-├── ssh-metrics-collector.sh      # Custom script for collecting metrics via SSH
-├── nginx/
-│   ├── grafana.conf              # NGINX config for Grafana
-│   ├── prometheus.conf           # NGINX config for Prometheus
-└── textfile-collector/           # Directory for Prometheus-compatible metrics files
-    ├── metrics_server2.prom
-    └── metrics_server4.prom
+├── docker-compose.yml           # Docker Compose configuration file
+├── grafana/                     # Grafana configuration directory
+│   ├── dashboards/              # Imported Grafana dashboards
+│   ├── data/                    # Grafana data (persistent volume)
+│   └── provisioning/            # Grafana provisioning directory
+│       ├── dashboards/          # Dashboard provisioning configs
+│       │   ├── dashboard-1.json # Example dashboard JSON
+│       │   └── dashboard.yml    # Dashboard configuration
+│       └── datasources/         # Datasource configuration
+│           └── prometheus.yml   # Prometheus as a data source
+├── nginx/                       # NGINX configuration directory
+│   ├── grafana.conf             # NGINX config for Grafana
+│   └── prometheus.conf          # NGINX config for Prometheus
+├── prometheus/                  # Prometheus configuration directory
+│   ├── data/                    # Prometheus data (persistent volume)
+│   └── prometheus.yml           # Prometheus scrape configurations
+├── README.md                    # Project documentation
+├── Scripts/                     # Custom scripts for metric collection
+│   ├── Collector1.sh            # Generic metric collector
+│   ├── Collector.sh             # Generic metric collector
+│   └── NodeExporter.sh          # Generic metric collector
+└── textfile-collector/          # Directory for Prometheus-compatible metrics
+
