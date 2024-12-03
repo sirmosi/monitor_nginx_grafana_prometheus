@@ -19,28 +19,26 @@ This project sets up a monitoring system using **Prometheus**, **Grafana**, and 
 
 ## 📂 **Directory Structure**
 ```plaintext
-├── docker-compose.yml           # Docker Compose configuration file
-├── grafana/                     # Grafana configuration directory
-│   ├── dashboards/              # Imported Grafana dashboards
-│   ├── data/                    # Grafana data (persistent volume)
-│   └── provisioning/            # Grafana provisioning directory
-│       ├── dashboards/          # Dashboard provisioning configs
-│       │   ├── dashboard-1.json # Example dashboard JSON
-│       │   └── dashboard.yml    # Dashboard configuration
-│       └── datasources/         # Datasource configuration
-│           └── prometheus.yml   # Prometheus as a data source
-├── nginx/                       # NGINX configuration directory
-│   ├── grafana.conf             # NGINX config for Grafana
-│   └── prometheus.conf          # NGINX config for Prometheus
-├── prometheus/                  # Prometheus configuration directory
-│   ├── data/                    # Prometheus data (persistent volume)
-│   └── prometheus.yml           # Prometheus scrape configurations
-├── README.md                    # Project documentation
-├── Scripts/                     # Custom scripts for metric collection
-│   ├── Collector1.sh            # Generic metric collector
-│   ├── Collector.sh             # Generic metric collector
-│   └── NodeExporter.sh          # Generic metric collector
-└── textfile-collector/          # Directory for Prometheus-compatible metrics
+├── docker-compose.yml                  # Docker Compose configuration file
+├── grafana                             # Grafana configuration directory
+│   └── provisioning                    # Provision Grafana Config
+│       ├── dashboards                  # Imported Grafana dashboards
+│       │   ├── dashboard-1.json        # Grafana dashboard template
+│       │   ├── dashboard.yml           # Grafana dashboard config
+│       │   └── HostingServers.json     # Grafana dashboard template
+│       ├── datasources                 # Datasource configuration
+│       │   └── prometheus.yml          # Prometheus as a data source
+│       └── grafana.ini                 # Grafana configuration
+├── nginx                               # NGINX configuration directory
+│   ├── grafana.conf                    # NGINX config for Grafana
+│   └── prometheus.conf                 # NGINX config for Prometheus
+├── prometheus                          # Prometheus configuration directory
+│   ├── data                            # Prometheus data (persistent volume)
+│   └── prometheus.yml                  # Prometheus scrape configurations
+├── README.md                           # Project documentation
+├── Scripts                             # Custom scripts for metric collection
+│   └── metric_collector_with_unique_server_id.sh
+└── textfile-collector
 ```
 
 ## 🚀 **Getting Started**
