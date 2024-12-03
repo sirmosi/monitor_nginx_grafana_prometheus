@@ -19,7 +19,6 @@ networks:
       - subnet: 192.168.2.0/24
         ip_range: 192.168.2.0/29
         gateway: 192.168.2.6
-        
 services:
 
   prometheus:
@@ -38,15 +37,25 @@ services:
         ipv4_address: 192.168.2.1
       front-tier:
         ipv4_address: 192.168.1.1
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "5m"
+          max-file: "5"
     restart: always
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana-enterprise
     container_name: grafana
+    environment:
+      - GF_PATHS_CONFIG=/etc/grafana/grafana.ini
+      #- GF_LOG_LEVEL=debug
+        #- GF_INSTALL_PLUGINS=grafana-clock-panel 1.0.1
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/grafana.ini:/etc/grafana/grafana.ini
     ports:
       - "3000:3000"
     networks:
@@ -54,6 +63,11 @@ services:
         ipv4_address: 192.168.2.2
       front-tier:
         ipv4_address: 192.168.1.2
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "5m"
+          max-file: "5"
     restart: always
 
   node-exporter:
@@ -71,6 +85,11 @@ services:
       - --path.rootfs=/host
       - --collector.textfile.directory=/var/lib/node_exporter
       - --collector.filesystem.mount-points-exclude="^(dev|proc|sys|var/lib/docker/.+)($|/)"
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "5m"
+          max-file: "5"
     restart: always
 
   cadvisor:
@@ -86,4 +105,9 @@ services:
     networks:
       back-tier:
         ipv4_address: 192.168.2.4
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "5m"
+          max-file: "5"
     restart: always

@@ -9,11 +9,23 @@ scrape_configs:
   - job_name: "node-exporter"
     static_configs:
       - targets: ["192.168.2.3:9100"]
+    metric_relabel_configs:
+      # Add the server label dynamically
+      - source_labels: [host]
+        regex: "server2"
+        target_label: server
+        replacement: "server2"
+      - source_labels: [host]
+        regex: "server4"
+        target_label: server
+        replacement: "server4"
+
+      # Relabel user ID to username dynamically
+      - source_labels: [user]
+        regex: "1014"
+        target_label: username
+        replacement: "breg"
 
   - job_name: "cadvisor"
     static_configs:
       - targets: ["192.168.2.4:8080"]
-
-  # - job_name: "external-resources"
-  #   static_configs:
-  #     - targets: ["external.server1.com:9090", "external.server2.com:9090"]
